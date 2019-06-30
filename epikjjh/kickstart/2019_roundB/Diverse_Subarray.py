@@ -53,7 +53,6 @@ class SegmentTree:
 
 test_num = int(input().rstrip())
 for test in range(test_num):
-    trinket_type = [0]*100000
     n, s = map(int, input().rstrip().split())
     table = list(map(int, input().rstrip().split()))
     freq = {}
