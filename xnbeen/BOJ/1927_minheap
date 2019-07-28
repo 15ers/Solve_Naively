@@ -1,0 +1,34 @@
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <stack>
+#include <string>
+#include <map>
+#include <queue>
+#include <deque>
+#include <math.h>
+#include <sstream>
+
+using namespace std;
+
+int main(int argc, char* argv[]) {
+	int n;
+	priority_queue<int,vector<int>,greater<int> > pq;
+	
+	cin>>n;
+	while(n--){
+		int k;
+		scanf("%d",&k);
+		if(k==0){
+			if(pq.empty())
+				printf("0\n");
+			else{ 
+				printf("%d\n",pq.top());
+				pq.pop();
+			}
+		}
+		else pq.push(k);
+	}
+	
+	return 0;
+}
