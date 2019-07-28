@@ -1,0 +1,48 @@
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <stack>
+#include <string>
+#include <map>
+#include <queue>
+#include <deque>
+#include <math.h>
+#include <sstream>
+
+using namespace std;
+
+int main(int argc, char* argv[]) {
+	int n,k;
+	vector<int>vec;//정답 저장
+	//[minpq],[maxpq] maxpq의 top이 중간값
+	priority_queue<int,vector<int>,greater<int>>minpq;
+	priority_queue<int>maxpq; 
+	cin>>n;
+	cin>>k;
+	maxpq.push(k);
+	vec.push_back(maxpq.top());
+	for(int i=0;i<n-1;++i){
+		scanf("%d",&k);
+	//minpq의 크기가 maxpq의 크기보다 1이상 크면 안되고 2이상 작으면 안된다.
+		if(k>maxpq.top()){ 
+			minpq.push(k);
+			if(minpq.size()>maxpq.size()){ 
+				maxpq.push(minpq.top());
+				minpq.pop();
+			}
+		}
+
+		else {
+			maxpq.push(k);
+			if(maxpq.size()>minpq.size()+1){
+				minpq.push(maxpq.top());
+				maxpq.pop();
+			}
+		}
+		vec.push_back(maxpq.top());	
+	}
+	
+	for(int i=0;i<vec.size();++i)
+		printf("%d\n",vec[i]);
+	return 0;
+}
