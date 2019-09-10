@@ -33,4 +33,7 @@ class CrawlData:
         soup = BeautifulSoup(response, 'html.parser')
         sample_data = [list(filter(None, elem.get_text().split("\r\n"))) for elem in soup.find_all("pre", {"class": "sampledata"})]
         self.input_data = sample_data[0::2]
-        self.output_data = sample_data[1::2]
+        output_data = sample_data[1::2]
+        output_data = [[e.rstrip()] for elem in output_data for e in elem]
+        self.output_data = output_data
+        
