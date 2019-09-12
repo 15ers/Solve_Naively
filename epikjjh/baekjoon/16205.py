@@ -32,9 +32,12 @@ translate(stream,op)
 def camelsplit(s):
     t = ''
     for c in s:
-        if "A"<=c<="Z" and t: yield t.lower(); t = ''
+        if "A"<=c<="Z" and t:
+            yield t.lower()
+            t = ''
         t+= c
-    if t: yield t.lower()
+    if t:
+        yield t.lower()
 
 mode, s = input().split()
 word = list(camelsplit(s)) if mode != '2' else s.split('_')
