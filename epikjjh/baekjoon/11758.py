@@ -1,0 +1,5 @@
+a,b = map(int,input().split())
+c,d = map(int,input().split())
+e,f = map(int,input().split())
+d = (c-a)*(f-b)-(d-b)*(e-a)
+print(0 if not d else -1 if d<0 else 1)
