@@ -4,6 +4,7 @@ using namespace std;
 
 int dy[8] = {-2,-2,-1,-1,1,1,2,2};
 int dx[8] = {-1,1,-2,2,-2,2,-1,1};
+bool visited[300][300];
 
 int main(){
 	int t;
@@ -15,7 +16,7 @@ int main(){
 		cin >> s_y >> s_x >> e_y >> e_x;
 		queue<int> q;
 		q.push(s_y*n+s_x);
-		bool visited[300][300] = {0};
+		fill(&visited[0][0],&visited[300][0],false);
 		visited[s_y][s_x] = true;
 		int ret = 0;
 		bool flag = false;
