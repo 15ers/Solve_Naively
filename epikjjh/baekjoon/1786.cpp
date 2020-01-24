@@ -26,8 +26,8 @@ int main(){
 			else	j++;
 		}
 	}
-	cout << ret.size() << endl;
-	for(int i: ret)	cout << i << endl;
+	printf("%d\n",ret.size());
+	for(int i: ret)	printf("%d\n",i);
 	
 	return 0;
 }
