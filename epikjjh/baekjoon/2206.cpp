@@ -9,12 +9,8 @@ bool visited[2][1000][1000];
 
 int main(){
 	int n,m;
-	memset(arr,0,sizeof(arr));
-	fill((bool*)visited,(bool*)visited+2*1000*1000,false);
-	cin >> n >> m;
-	for(int i=0;i<n;i++){
-		for(int j=0;j<m;j++)	scanf("%1d",&arr[i][j]);
-	}
+    scanf("%d %d",&n,&m);
+	for(int i=0;i<n;i++)    for(int j=0;j<m;j++)	scanf("%1d",&arr[i][j]);
 	queue<int> q;
 	q.push(0);
 	visited[0][0][0] = true;
@@ -29,7 +25,7 @@ int main(){
 			q.pop();
 			if(cur_r==n-1&&cur_c==m-1){
 				flag = true;
-				cout << ret << endl;
+                printf("%d\n",ret);
 				break;
 			}
 			for(int j=0;j<4;j++){
@@ -51,7 +47,7 @@ int main(){
 		if(flag)	break;
 		ret++;
 	}
-	if(!flag)	cout << -1 << endl;
+	if(!flag)	printf("-1\n");
 		
 	return 0;
 }
