@@ -2,51 +2,37 @@
 
 using namespace std;
 
-class Graph{
-public:
-	int size;
-	vector<vector<int> > adj;
-	vector<bool> visited;
-	
-	Graph(int n): size(n){
-		adj.resize(size);
-		visited.resize(size);
-		visited.resize(size);
-		fill(visited.begin(),visited.end(),false);
-	}
-	void addEdge(int u, int v){
-		adj[u].push_back(v);
-		adj[v].push_back(u);
-	}
-	void sortGraph(){
-		for(int i=0;i<size;i++)	sort(adj[i].begin(),adj[i].end());
-	}
-	int dfsAll(){
-		int ret = 0;
-		for(int i=0;i<size;i++){
-			if(!visited[i]){
-				dfs(i);
-				ret++;
-			}
-		}
-		return ret;
-	}
-private:
-	void dfs(int cur){
-		visited[cur] = true;
-		for(int nxt: adj[cur])	if(!visited[nxt])	dfs(nxt);
-	}
-};
+vector<vector<int>> adj;
+bool visited[1001];
+int n;
+
+void dfs(int cur){
+    visited[cur] = true;
+    for(int nxt: adj[cur])  if(!visited[nxt])   dfs(nxt);
+}
+
+int dfsAll(){
+    int ret=0;
+    for(int i=1;i<=n;i++){
+        if(!visited[i]){
+            dfs(i);
+            ret++;
+        }
+    }
+    return ret;
+}
 
 int main(){
-	int n,m,u,v;
-	scanf("%d %d", &n,&m);
-	Graph g(n);
-	for(int i=0;i<m;i++){
-		scanf("%d %d", &u,&v);
-		g.addEdge(u-1,v-1);
-	}
-	printf("%d\n", g.dfsAll());
-	
-	return 0;
+    int m;
+    scanf("%d %d",&n,&m);
+    adj.resize(n+1);
+    while(m--){
+        int a,b;
+        scanf("%d %d",&a,&b);
+        adj[a].push_back(b);
+        adj[b].push_back(a);
+    }
+    printf("%d\n",dfsAll());
+
+    return 0;
 }
