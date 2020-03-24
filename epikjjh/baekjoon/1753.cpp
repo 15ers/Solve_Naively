@@ -3,8 +3,8 @@
 using namespace std;
 
 const int INF=987654321;
-typedef pair<int,int> p;
-vector<vector<p>> adj;
+typedef pair<int,int> P;
+vector<vector<P>> adj;
 
 int main(){
 	int v,e,k;
@@ -13,29 +13,28 @@ int main(){
 	for(int i=0;i<e;i++){
 		int x,y,w;
 		scanf("%d %d %d",&x,&y,&w);
-		adj[x].push_back(make_pair(y,w));
+		adj[x].push_back({y,w});
 	}
 	vector<int> dist(v+1);
 	vector<bool> visited(v+1);
 	fill(dist.begin(),dist.end(),INF);
-	fill(visited.begin(),visited.end(),false);
-	priority_queue<p,vector<p>,greater<p>> q;
+	priority_queue<P,vector<P>,greater<P>> pq;
 	
 	dist[k] = 0;
-	q.push(make_pair(0,k));
-	while(!q.empty()){
+	pq.push({0,k});
+	while(!pq.empty()){
 		int cur;
 		do{
-			cur = q.top().second;
-			q.pop();
-		}while(!q.empty() && visited[cur]);
+			cur = pq.top().second;
+			pq.pop();
+		}while(!pq.empty() && visited[cur]);
 		if(visited[cur])	break;
 		visited[cur] = true;
 		for(auto &p: adj[cur]){
 			int nxt=p.first,d=p.second;
 			if(dist[nxt]>dist[cur]+d){
 				dist[nxt] = dist[cur]+d;
-				q.push(make_pair(dist[nxt],nxt));	
+				pq.push({dist[nxt],nxt});	
 			}
 		}
 	}

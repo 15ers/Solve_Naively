@@ -2,41 +2,38 @@
 
 using namespace std;
 
+bool visited[1000001];
+
 int main(){
 	int f,s,g,u,d;
-	bool visited[1000001] = {0};
+    scanf("%d %d %d %d %d",&f,&s,&g,&u,&d);
 	queue<int> q;
-	
-	cin >> f >> s >> g >> u >> d;
 	q.push(s);
 	visited[s] = true;
 	int ret = 0;
-	bool flag = false;
 	while(!q.empty()){
-		int s = q.size();
-		for(int i=0;i<s;i++){
-			int cur = q.front();
+		int t = q.size();
+		for(int i=0;i<t;i++){
+			int c = q.front();
 			q.pop();
-			if(cur==g){
-				cout << ret << endl;
-				flag = true;
-				break;
+			if(c==g){
+                printf("%d\n",ret);
+                return 0;
 			}
-			int nxt_up = cur+u;
-			int nxt_down = cur-d;
-			if(1<=nxt_up&&nxt_up<=f &&!visited[nxt_up]){
-				visited[nxt_up] = true;
-				q.push(nxt_up);
+			int nu = c+u;
+			int nd = c-d;
+			if(1<=nu&&nu<=f && !visited[nu]){
+				visited[nu] = true;
+				q.push(nu);
 			}
-			if(1<=nxt_down&&nxt_down<=f &&!visited[nxt_down]){
-				visited[nxt_down] = true;
-				q.push(nxt_down);
+			if(1<=nd&&nd<=f && !visited[nd]){
+				visited[nd] = true;
+				q.push(nd);
 			}
 		}
-		if(flag)	break;
 		ret++;
 	}
-	if(!visited[g])	cout << "use the stairs" << endl;
+    printf("use the stairs\n");
 
 	return 0;
 }
