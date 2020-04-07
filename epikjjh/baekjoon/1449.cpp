@@ -3,22 +3,25 @@
 using namespace std;
 
 int main(){
-	ios::sync_with_stdio(0),cin.tie(0);
-	int n,l;
-	cin >> n >> l;
-	int arr[1000] = {0}, ret = 0;
-	for(int i=0;i<n;i++)	cin >> arr[i];
-	sort(arr,arr+n);
-	for(int i=0;i<n;i++){
-		if(!arr[i])	continue;
-		double f = arr[i] - 0.5 + l;
-		for(int j=0;j<n;j++){
-			if(f>=arr[j]+0.5)	arr[j] = 0;
-			else	break;
-		}
-		ret++;
-	}
-	cout << ret << endl;
-	
-	return 0;
+    int n,l;
+    scanf("%d %d",&n,&l);
+    vector<int> arr(n);
+    for(int &p: arr)    scanf("%d",&p);
+    sort(arr.begin(),arr.end());
+    int ret=1;
+    for(int i=0;i<n;){
+        int r=arr[i]+l-1;
+        bool flag=true;
+        for(int j=i+1;j<n;j++){
+            if(r<arr[j]){
+                i = j;
+                flag = false;
+                break;
+            }
+        }
+        if(flag)    break;
+        ret++;
+    }
+    printf("%d\n",ret);
+    return 0;
 }

@@ -2,31 +2,23 @@
 
 using namespace std;
 
+typedef pair<int,int> P;
+
 int main(){
-	ios::sync_with_stdio(0),cin.tie(0);
-	long long l,n,r_f,r_b,d,x,c;
-	long long arr[1000001] = {0};
-	cin >> l >> n >> r_f >> r_b;
-	d = r_f - r_b;
-	for(int i=0;i<n;i++){
-		cin >> x >> c;
-		arr[x] = c;
-	}
-	int max_c=-1;
-	for(int i=1000000;i>=1;i--){
-		if(!arr[i])	continue;
-		if(arr[i]>max_c)	max_c = arr[i];
-		else	arr[i] = 0;
-	}
-	int prev=0;
-	long long ret=0;
-	for(int i=0;i<=1000000;i++){
-		if(arr[i]){
-			ret += arr[i]*(i-prev)*d;
-			prev = i;
-		}
-	}
-	cout << ret << endl;
-	
-	return 0;
+    int l,n,rf,rb;
+    scanf("%d %d %d %d",&l,&n,&rf,&rb);
+    int d=rf-rb;
+    vector<P> arr(n);
+    for(auto &p: arr)   scanf("%d %d",&p.second,&p.first);
+    sort(arr.begin(),arr.end(),greater<P>());
+    long long ret=0,prev=0;
+    for(auto &p: arr){
+        int loc=p.second,val=p.first;
+        if(prev>loc)    continue;
+        ret += 1LL*(loc-prev)*val*d;
+        prev = loc;
+    }
+    printf("%lld\n",ret);
+
+    return 0;
 }

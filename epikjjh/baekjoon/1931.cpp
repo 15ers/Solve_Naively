@@ -2,36 +2,33 @@
 
 using namespace std;
 
-struct timetable{
-	int start;
-	int end;
-};
-
-bool cmp(const timetable& a, const timetable& b){
-	if(a.end==b.end)	return a.start<b.start;
-	else	return a.end<b.end;
+typedef pair<int,int> P;
+bool cmp(P &left,P &right){
+   if(left.second==right.second)    return left.first<right.first;
+   else return left.second<right.second;
 }
 
 int main(){
-	ios::sync_with_stdio(0),cin.tie(0);
-	int n,ret=0;
-	timetable arr[100000];
-	cin >> n;
-	for(int i=0;i<n;i++)	cin >> arr[i].start >> arr[i].end;
-	sort(arr,arr+n,cmp);
-	for(int i=0;i<n;i++){
-		int start=arr[i].start,end=arr[i].end;
-		if(start==-1 && end==-1)	continue;
-		ret++;
-		for(int j=i+1;j<n;j++){
-			if(arr[j].start<end){
-				arr[j].start=-1;
-				arr[j].end=-1;
-			}
-			else	break;
-		}
-	}
-	cout << ret << endl;
-	
-	return 0;
+    int n;
+    scanf("%d",&n);
+    vector<P> arr(n);
+    for(auto &p: arr)   scanf("%d %d",&p.first,&p.second);
+    sort(arr.begin(),arr.end(),cmp);
+    int ret=1;
+    for(int i=0;i<n;){
+        int e=arr[i].second;
+        bool flag=true;
+        for(int j=i+1;j<n;j++){
+            if(arr[j].first>=e){
+                flag = false;
+                i = j;
+                break;
+            }
+        }
+        if(flag)    break;
+        ret++;
+    }
+    cout << ret << endl;
+    
+    return 0;
 }

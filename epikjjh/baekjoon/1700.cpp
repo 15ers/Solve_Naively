@@ -3,52 +3,49 @@
 using namespace std;
 
 int main(){
-	ios::sync_with_stdio(0),cin.tie(0);
-	int n,k,ret=0;
-	int order[100]={0};
-	vector<int> tab;
-	cin >> n >> k;
-	for(int i=0;i<k;i++)	cin >> order[i];
-	for(int i=0;i<k;i++){
-		bool isin = false;
-		for(int j=0;j<tab.size();j++){
-			if(order[i]==tab[j]){
-				isin = true;
-				break;
-			}
-		}
-		if(isin)	continue;
-		if(tab.size()<n){
-			tab.push_back(order[i]);
-			continue;	
-		}
-		int farthest=-1,tab_idx=-1;
-		bool flag=true;
-		for(int l=0;l<n;l++){
-			int loc_idx=-1;
-			for(int j=i+1;j<k;j++){
-				if(tab[l]==order[j]){
-					loc_idx = j;
-					break;
-				}
-			}
-			if(loc_idx==-1){
-				tab[l] = order[i];
-				flag = false;
-				ret++;
-				break;
-			}
-			if(farthest<loc_idx){
-				farthest = loc_idx;
-				tab_idx = l;
-			}
-		}
-		if(flag){
-			tab[tab_idx] = order[i];
-			ret++;	
-		}
-	}
-	cout << ret << endl;
-	
-	return 0;
+    int n,k;
+    cin >> n >> k;
+    vector<int> plug(n,-1),seq(k);
+    for(int &p: seq)    cin >> p;
+    int ret=0,idx=0;
+    for(int i=0;i<k;i++){
+        bool flag=false;
+        for(int &p: plug){
+            if(p==-1){
+                p = seq[i];
+                flag = true;
+                break;
+            }
+            else if(p==seq[i]){
+                flag = true;
+                break;
+            }
+        }
+        if(flag)    continue;
+        map<int,int> idx_dict;
+        for(int p : plug)   idx_dict.insert({p,-1});
+        for(int j=i;j<k;j++)    if(idx_dict.find(seq[j])!=idx_dict.end() && idx_dict[seq[j]]==-1)    idx_dict[seq[j]] = j;
+        int tar=-1,max_idx=-1,max_elem=-1;
+        for(auto p: idx_dict){
+            if(p.second==-1){
+                tar = p.first;
+                break;
+            }
+            if(p.second>max_elem){
+                max_elem = p.second;
+                max_idx = p.first;
+            }
+        }
+        if(tar==-1) tar = max_idx;
+        for(int &p: plug){
+            if(p==tar){
+                p = seq[i];
+                break;
+            }
+        }
+        ret++;
+    }
+    cout << ret << endl;
+
+    return 0;
 }
