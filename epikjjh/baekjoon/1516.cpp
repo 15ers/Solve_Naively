@@ -2,34 +2,37 @@
 
 using namespace std;
 
+typedef pair<int,int> P;
+
 int main(){
-	int n;
-	cin >> n;
-	vector<vector<int>> adj(n+1);
-	vector<int> indegree(n+1),ret(n+1),time(n+1);
-	queue<int> q;
-	for(int i=1;i<=n;i++){
-		int t,u;
-		cin >> t;
-		time[i] = t;
-		while(cin>>u, u!=-1){
-			adj[u].push_back(i);
-			indegree[i]++;
-		}
-		if(!indegree[i]){
-			ret[i] = time[i];
-			q.push(i);
-		}
-	}
-	for(int i=0;i<n;i++){
-		int cur = q.front();
-		q.pop();
-		for(int nxt: adj[cur]){
-			ret[nxt] = max(ret[nxt],ret[cur]+time[nxt]);
-			if(!(--indegree[nxt]))	q.push(nxt);
-		}
-	}
-	for(int i=1;i<=n;i++)	cout << ret[i] << endl;
-	
-	return 0;
+    int n;
+    scanf("%d",&n);
+    vector<vector<int>> adj(n+1);
+    vector<int> ret(n+1);
+    int indegree[501];
+    memset(indegree,0,sizeof(indegree));
+    for(int i=1;i<=n;i++){
+        int c,pre;
+        scanf("%d",&c);
+        ret[i] = c;
+        while(scanf("%d",&pre),pre!=-1){
+            adj[pre].push_back(i);
+            indegree[i]++;
+        }
+    }
+    priority_queue<P,vector<P>,greater<P>> pq;
+    for(int i=1;i<=n;i++)   if(!indegree[i])    pq.push({ret[i],i});
+    while(!pq.empty()){
+        int cur=pq.top().second;
+        pq.pop();
+        for(int nxt: adj[cur]){
+            if(!(--indegree[nxt])){
+                ret[nxt] += ret[cur];
+                pq.push({ret[nxt],nxt});
+            }
+        }
+    }
+    for(int i=1;i<=n;i++)   printf("%d\n",ret[i]);
+
+    return 0;
 }
