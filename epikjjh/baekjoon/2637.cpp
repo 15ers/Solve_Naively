@@ -2,42 +2,33 @@
 
 using namespace std;
 
+typedef pair<int,int> P;
+
 int main(){
-	int n,m;
-	cin >> n >> m;
-	vector<vector<pair<int,int>>> adj(n+1);
-	vector<vector<int>> cost(n+1,vector<int>(n+1));
-	vector<int> indegree(n+1);
-	while(m--){
-		int x,y,k;
-		cin >> x >> y >> k;
-		adj[y].push_back({x,k});
-		cost[x][y] = k;
-		indegree[x]++;
-	}
-	queue<int> q,ret;
-	for(int i=1;i<=n;i++){
-		if(!indegree[i]){
-			q.push(i);
-			ret.push(i);
-		}
-	}
-	for(int i=1;i<=n;i++){
-		int cur = q.front();
-		q.pop();
-		for(auto &p: adj[cur]){
-			int nxt = p.first;
-			int c = p.second;
-			cost[nxt][cur] = c;
-			for(int j=1;j<n;j++)	if(cost[cur][j])	cost[nxt][j] += c*cost[cur][j];
-			if(!(--(indegree[nxt])))	q.push(nxt);
-		}
-	}
-	while(!ret.empty()){
-		int cur = ret.front();
-		ret.pop();
-		cout << cur << " " << cost[n][cur] << endl;
-	}
-	
-	return 0;
+    int n,m;
+    scanf("%d %d",&n,&m);
+    vector<int> indegree(n+1),outdegree(n+1),ret(n+1);
+    vector<vector<P>> adj(n+1);
+    ret[n] = 1;
+    while(m--){
+        int x,y,z;
+        scanf("%d %d %d",&x,&y,&z);
+        adj[x].push_back({y,z});
+        indegree[y]++;
+        outdegree[x]++;
+    }
+    queue<int> q;
+    for(int i=1;i<=n;i++)   if(!indegree[i])    q.push(i);
+    while(!q.empty()){
+        int cur=q.front();
+        q.pop();
+        for(auto p: adj[cur]){
+            int nxt=p.first,cost=p.second;
+            ret[nxt] += ret[cur]*cost;
+            if(!(--indegree[nxt]))  q.push(nxt);
+        }
+    }
+    for(int i=1;i<=n;i++)   if(!outdegree[i])   printf("%d %d\n",i,ret[i]);
+
+    return 0;
 }
