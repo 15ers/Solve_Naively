@@ -1,0 +1,28 @@
+import java.util.*;
+import java.util.List;
+class Solution {
+    public HashMap<Long, Long> m = new HashMap<Long,Long>();
+    public long find(long x){
+        if(!m.containsKey(x)) return x;
+        m.put(x,find(m.get(x)));
+        return m.get(x);
+    }
+    
+    public long[] solution(long k, long[] room_number) {    
+        
+        for(int i=0; i<room_number.length;++i){
+            long x= room_number[i];
+            if(!m.containsKey(x)){                
+                m.put(x,find(x+1));
+                room_number[i]=x;
+            }else{
+                long tmp = find(m.get(x));                
+                m.put(tmp,find(tmp+1));
+                room_number[i]=tmp;
+            }
+        }
+        
+        
+        return room_number;
+    }
+}
