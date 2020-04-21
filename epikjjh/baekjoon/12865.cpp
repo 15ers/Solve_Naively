@@ -2,23 +2,22 @@
 
 using namespace std;
 
-int dp[101][100001];
-int w[100],v[100];
+int weight[100],value[100],arr[100][100001];
+int n,k;
 
-int knapsack(int index, int weight){
-	if(index<0)	return 0;
-	if(dp[index][weight]>0)	return dp[index][weight];
-	if(w[index]>weight)	return knapsack(index-1,weight);
-	return dp[index][weight] = max(knapsack(index-1,weight-w[index])+v[index], knapsack(index-1,weight));
+int func(int index, int w){
+    if(index>=n)    return 0;
+    int &ret=arr[index][w];
+    if(ret!=-1)   return ret;
+    if(w<weight[index]) return ret=func(index+1,w);
+    else    return ret=max(func(index+1,w),func(index+1,w-weight[index])+value[index]);
 }
 
 int main(){
-	ios::sync_with_stdio(0),cin.tie(0);
-	memset(dp,-1,sizeof(dp));
-	int n,k;
-	cin >> n >> k;
-	for(int i=0;i<n;i++)	cin >> w[i] >> v[i];
-	cout << knapsack(n-1,k) << endl;
-
-	return 0;
+    cin >> n >> k;
+    memset(arr,-1,sizeof(arr));
+    for(int i=0;i<n;i++)    cin >> weight[i] >> value[i];
+    cout << func(0,k) << endl;
+    
+    return 0;
 }

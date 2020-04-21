@@ -1,15 +1,14 @@
 #include <bits/stdc++.h>
+#define MOD 10007
 
 using namespace std;
 
 int main(){
-	ios::sync_with_stdio(0),cin.tie(0);
-	vector<int> m(1001);
-	m[0]=0,m[1]=1,m[2]=3;
-	int n;
-	cin >> n;
-	for(int i=3;i<=n;i++)	m[i] = (m[i-1]+m[i-2]*2)%10007;
-	cout << m[n] << endl;
-	
-	return 0;
+    int arr[1001]={0,1,3};
+    int n;
+    cin >> n;
+    for(int i=3;i<=n;i++)   arr[i] = (arr[i-1]%MOD+(2*arr[i-2])%MOD)%MOD;
+    cout << arr[n] << endl;
+
+    return 0;
 }
