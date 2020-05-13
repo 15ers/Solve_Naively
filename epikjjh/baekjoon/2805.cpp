@@ -3,22 +3,19 @@
 using namespace std;
 
 int main(){
-	ios::sync_with_stdio(0),cin.tie(0);
-	int n,m,l=0,h=0;
-	cin >> n >> m;
-	vector<int> arr(n);
-	for(int i=0;i<n;i++){
-		cin >> arr[i];
-		h = max(h,arr[i]);
-	}
-	while(l+1<h){
-		int mid = (l+h)/2;
-		long long s = 0;
-		for(int i=0;i<n;i++)	if(arr[i]>mid)	s += arr[i]-mid;
-		if(s>=m)	l = mid;
-		else	h = mid;
-	}
-	cout << l << endl;
-	
-	return 0;
+    int n,m;
+    scanf("%d %d",&n,&m);
+    vector<int> trees(n);
+    int low=0,high=1000000001;
+    for(int &p: trees)  scanf("%d",&p);
+    while(low+1<high){
+        int mid = (low+high)/2;
+        long long sums=0;
+        for(int p: trees)   sums += (p-mid)>0 ? p-mid : 0;
+        if(sums>=m)   low = mid;
+        else    high = mid;
+    }
+    printf("%d\n",low);
+
+    return 0;
 }
