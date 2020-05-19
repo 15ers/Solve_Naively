@@ -3,23 +3,23 @@
 using namespace std;
 
 int main(){
-	int k,n;
-	long long l=1,h=0;
-	cin >> k >> n;
-	vector<int> v(k);
-	for(int &p: v){
-		cin >> p;
-		h = (h>p) ? h : p;
-	}
-	h++;
-	while(l+1<h){
-		long long mid = (l+h)/2;
-		long long cnt=0;
-		for(int &p: v)	cnt += p/mid;
-		if(cnt>=n)	l = mid;
-		else	h = mid;
-	}
-	cout << l << endl;
-	
-	return 0;
+    int k,n;
+    scanf("%d %d",&k,&n);
+    vector<int> arr(k);
+    long long left=1,right;
+    for(int &p:arr){
+        scanf("%d",&p);
+        right = right>p ? right : p;
+    }
+    right++;
+    while(left+1<right){
+        long long mid=(left+right)/2;
+        long long s=0;
+        for(int p:arr)  s += p/mid;
+        if(s>=n) left = mid;
+        else    right = mid;
+    }
+    printf("%lld\n",left);
+
+    return 0;
 }
