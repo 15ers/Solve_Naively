@@ -17,7 +17,6 @@ void dfs(int cur){
 	}
 }
 int func(int cur, int ispar){
-	if(cur==n)	return 0;
 	int &ret=dp[cur][ispar];
 	if(ret!=-1)	return ret;
 	int notpick=INF,pick=1;
